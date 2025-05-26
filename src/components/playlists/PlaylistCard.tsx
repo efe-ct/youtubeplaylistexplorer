@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PlayCircle, Clock, Eye } from 'lucide-react';
+import { PlayCircle, Clock, Eye, ExternalLink } from 'lucide-react';
 import { Playlist } from '../../services/youtube-api';
 import { format, parseISO } from 'date-fns';
 
@@ -10,11 +10,11 @@ interface PlaylistCardProps {
 
 const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
   return (
-    <Link 
-      to={`/playlist/${playlist.id}`}
-      className="block bg-card hover:bg-card/95 transition-all rounded-lg overflow-hidden shadow-card hover:shadow-card-hover border border-border hover:border-primary/50"
-    >
-      <div className="relative aspect-video bg-secondary overflow-hidden">
+    <div className="group bg-card hover:bg-card/95 transition-all rounded-lg overflow-hidden shadow-card hover:shadow-card-hover border border-border hover:border-primary/50">
+      <Link 
+        to={`/playlist/${playlist.id}`}
+        className="block relative aspect-video bg-secondary overflow-hidden"
+      >
         {playlist.thumbnail ? (
           <img 
             src={playlist.thumbnail} 
@@ -29,10 +29,25 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
         <div className="absolute bottom-2 right-2 bg-background/80 backdrop-blur-sm text-foreground text-xs px-2 py-1 rounded">
           {playlist.itemCount} {playlist.itemCount === 1 ? 'video' : 'videos'}
         </div>
-      </div>
+      </Link>
       
       <div className="p-4">
-        <h3 className="font-medium text-foreground line-clamp-1">{playlist.title}</h3>
+        <div className="flex items-start justify-between gap-2">
+          <Link to={`/playlist/${playlist.id}`}>
+            <h3 className="font-medium text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+              {playlist.title}
+            </h3>
+          </Link>
+          <a
+            href={`https://www.youtube.com/playlist?list=${playlist.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            title="Open in YouTube"
+          >
+            <ExternalLink size={16} />
+          </a>
+        </div>
         
         {playlist.description && (
           <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
@@ -53,7 +68,7 @@ const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
           </span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

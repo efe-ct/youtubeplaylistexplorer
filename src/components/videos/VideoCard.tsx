@@ -31,8 +31,13 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg overflow-hidden flex flex-col sm:flex-row shadow-card hover:shadow-card-hover transition-all">
-      <div className="relative aspect-video sm:w-68">
+    <div className="group bg-card border border-border rounded-lg overflow-hidden flex flex-col sm:flex-row shadow-card hover:shadow-card-hover transition-all">
+      <a 
+        href={`https://www.youtube.com/watch?v=${video.id}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative aspect-video sm:w-68"
+      >
         {video.thumbnail ? (
           <img 
             src={video.thumbnail} 
@@ -47,11 +52,30 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
         <div className="absolute bottom-2 right-2 bg-background/80 backdrop-blur-sm text-foreground text-xs px-2 py-1 rounded">
           {formatDuration(video.duration)}
         </div>
-      </div>
+      </a>
       
       <div className="p-4 flex-1 flex flex-col">
         <div>
-          <h3 className="font-medium text-foreground line-clamp-2">{video.title}</h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="font-medium text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+              <a 
+                href={`https://www.youtube.com/watch?v=${video.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {video.title}
+              </a>
+            </h3>
+            <a
+              href={`https://www.youtube.com/watch?v=${video.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              title="Open in YouTube"
+            >
+              <ExternalLink size={16} />
+            </a>
+          </div>
           
           <div className="mt-1 text-sm text-muted-foreground">
             {video.channelTitle}
