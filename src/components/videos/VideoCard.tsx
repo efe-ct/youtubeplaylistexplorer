@@ -1,21 +1,21 @@
-import React from 'react';
-import { ExternalLink, Clock, ThumbsUp, MessageSquare } from 'lucide-react';
+import React, { useState } from 'react';
+import { ExternalLink, ThumbsUp, MessageSquare, Clock } from 'lucide-react';
 import { Video } from '../../services/youtube-api';
 import { format, parseISO } from 'date-fns';
+import ContextMenu from '../common/ContextMenu';
 
 interface VideoCardProps {
   video: Video;
 }
 
 const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
-  // Format view count with commas
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
+
   const formatCount = (count: string) => {
     return parseInt(count).toLocaleString();
   };
   
-  // Format duration from ISO 8601 format
   const formatDuration = (duration: string) => {
-    // Simple formatting for common durations
     const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
     if (!match) return duration;
     
@@ -30,8 +30,16 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
     }
   };
 
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setContextMenu({ x: e.pageX, y: e.pageY });
+  };
+
   return (
-    <div className="group bg-card border border-border rounded-lg overflow-hidden flex flex-col sm:flex-row shadow-card hover:shadow-card-hover transition-all">
+    <div 
+      className="group bg-card border border-border rounded-lg overflow-hidden flex flex-col sm:flex-row shadow-card hover:shadow-card-hover transition-all"
+      onContextMenu={handleContextMenu}
+    >
       <a 
         href={`https://www.youtube.com/watch?v=${video.id}`}
         target="_blank"
@@ -103,6 +111,14 @@ const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
           </div>
         </div>
       </div>
+
+      {contextMenu && (
+        <ContextMenu
+          position={contextMenu}
+          onClose={() => setContextMenu(null)}
+          videoId={video.id}
+        />
+      )}
     </div>
   );
 };

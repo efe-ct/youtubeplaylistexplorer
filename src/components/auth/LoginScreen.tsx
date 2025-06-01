@@ -1,5 +1,6 @@
 import React from 'react';
 import { Youtube } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -53,9 +54,13 @@ const LoginScreen: React.FC = () => {
         </div>
         
         <div className="text-center text-sm text-muted-foreground">
-          <p>
+          <p className="mb-2">
             We only request read-only access to your YouTube data.
           </p>
+          <div className="flex justify-center gap-4 text-xs">
+            <Link to="/terms" className="hover:text-foreground">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-foreground">Privacy Policy</Link>
+          </div>
         </div>
       </div>
     </div>
