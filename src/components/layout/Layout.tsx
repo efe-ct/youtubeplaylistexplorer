@@ -10,12 +10,30 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const PUBLIC_ROUTES = ['/privacy', '/terms', '/']; // add more public paths if needed
+// Define public routes as exact matches (not prefixes!)
+const PUBLIC_ROUTES = ['/privacy', '/terms', '/'];
+
+/**
+ * Checks if a route is public.
+ * Only exact matches are considered public.
+ */
+function isPublicRoute(pathname: string): boolean {
+  return PUBLIC_ROUTES.includes(pathname);
+}
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
-  const isPublicRoute = PUBLIC_ROUTES.includes(location.pathname);
+  const publicRoute = isPublicRoute(location.pathname);
+
+  // Debug logging to help trace auth and routing issues
+  // Remove or comment out in production
+  // console.log({
+  //   pathname: location.pathname,
+  //   isAuthenticated,
+  //   isLoading,
+  //   publicRoute,
+  // });
 
   if (isLoading) {
     return (
@@ -29,7 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   // Only require auth for non-public routes
-  if (!isAuthenticated && !isPublicRoute) {
+  if (!isAuthenticated && !publicRoute) {
     return <LoginScreen />;
   }
 
