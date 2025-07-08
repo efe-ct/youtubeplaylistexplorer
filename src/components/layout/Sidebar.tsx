@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, List, Folder } from 'lucide-react';
+import { Home, Search, Folder } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { fetchPlaylists, Playlist } from '../../services/youtube-api';
 
@@ -22,6 +22,10 @@ const Sidebar: React.FC = () => {
         } finally {
           setIsLoading(false);
         }
+      } else {
+        // No access token means user is not authenticated
+        setIsLoading(false);
+        setPlaylists([]);
       }
     };
     

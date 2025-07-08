@@ -55,7 +55,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
+        {isAuthenticated && <Sidebar />}
         <main className="flex-1 overflow-auto p-4 md:p-6">
           <div className="container-app">
             {children}
