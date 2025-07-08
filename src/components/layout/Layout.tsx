@@ -10,8 +10,8 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-// Define public routes as exact matches (not prefixes!)
-const PUBLIC_ROUTES = ['/privacy', '/terms', '/'];
+// Define public routes that don't require authentication
+const PUBLIC_ROUTES = ['/privacy', '/terms'];
 
 /**
  * Checks if a route is public.
@@ -35,6 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   //   publicRoute,
   // });
 
+  // Show loading spinner while checking authentication
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -46,7 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     );
   }
 
-  // Only require auth for non-public routes
+  // For all routes except privacy and terms, require authentication
   if (!isAuthenticated && !publicRoute) {
     return <LoginScreen />;
   }
