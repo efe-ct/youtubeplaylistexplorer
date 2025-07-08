@@ -1,4 +1,4 @@
-# YouTube Playlist Explorer
+# YouTube Playlist Manager
 
 A modern React-based tool for exploring, analyzing, and managing YouTube playlists with a focus on usability and extensibility.
 
@@ -6,7 +6,7 @@ A modern React-based tool for exploring, analyzing, and managing YouTube playlis
 
 ## Overview
 
-**YouTube Playlist Explorer** enables users to:
+**YouTube Playlist Manager** enables users to:
 - Fetch and display playlist details using the YouTube Data API
 - Analyze playlist metrics and video statistics
 - Export playlist data for further use
@@ -159,4 +159,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 > _If you find this project helpful, consider starring the repo!_
 
 ```
-- [View package.json](https://github.com/efe-ct/youtubeplaylistexplorer/blob/main/package.json)
+- [View package.json](https://github.com/efe-ct/youtubeplaylist/blob/main/package.json)
