@@ -10,10 +10,12 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+const PUBLIC_ROUTES = ['/privacy', '/terms', '/']; // add more public paths if needed
+
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const isPublicRoute = PUBLIC_ROUTES.includes(location.pathname);
 
   if (isLoading) {
     return (
@@ -26,7 +28,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     );
   }
 
-  if (!isAuthenticated) {
+  // Only require auth for non-public routes
+  if (!isAuthenticated && !isPublicRoute) {
     return <LoginScreen />;
   }
 
