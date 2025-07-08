@@ -17,7 +17,7 @@ A modern React-based tool for exploring, analyzing, and managing YouTube playlis
 ## Demo
 
 <!-- Replace with your live demo link if available -->
-[Live Demo](#)
+[Live Demo](https://yt-playlistmanager.netlify.app/)
 
 ---
 
